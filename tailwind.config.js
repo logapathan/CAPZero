@@ -24,8 +24,8 @@ export default {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "#4287f5", // Replace with your desired primary color
-          foreground: "#FFFFFF", // Color for text/icons on checked state
+          DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",

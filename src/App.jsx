@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";  // Assuming you have 
 import RegistrationForm from './RegistrationForm';
 import Profile from './Profile'
 import ContestPage from './ContestPage';
+import Box from './Box';
+
 
 const App = () => {
   return (
@@ -19,6 +21,7 @@ const App = () => {
         {/* Other routes can go here */}
         <Route path="/k" element={<Profile />} />
         <Route path='/l' element={<RegistrationForm />} />
+        <Route path = "/n" element={<Box />} />
         
       </Routes>
     </Router>
