@@ -262,22 +262,50 @@ const UserProfile = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-gray-800 text-white py-6">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="bg-gray-900 text-white py-6">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center">
-            <div>
-              <h4 className="text-lg font-bold">CAPZERO</h4>
-              <p className="text-sm">Design & Innovation Platform</p>
+            <div className="text-xl">&copy; 2024 GitHub, Inc.</div>
+            <div className="flex gap-6">
+              <a href="#terms" className="hover:underline">Terms</a>
+              <a href="#privacy" className="hover:underline">Privacy</a>
+              <a href="#security" className="hover:underline">Security</a>
+              <a href="#status" className="hover:underline">Status</a>
+              <a href="#docs" className="hover:underline">Docs</a>
+              <a href="#contact" className="hover:underline">Contact</a>
+              <a href="#cookies" className="hover:underline">Manage cookies</a>
+              <a href="#privacy-policy" className="hover:underline">Do not share my personal information</a>
             </div>
-            <div className="space-x-6">
-              <a href="https://facebook.com" className="hover:text-gray-300">Facebook</a>
-              <a href="https://twitter.com" className="hover:text-gray-300">Twitter</a>
-              <a href="https://linkedin.com" className="hover:text-gray-300">LinkedIn</a>
-            </div>
-          </div>
-          <div className="mt-6 text-center text-sm">
-            <p>Address: 1234 Innovation Road, Tech City, 56789</p>
-            <p>Contact: +123-456-7890 | email@capzero.com</p>
+            <div className="flex gap-4">
+  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+    <img
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+      alt="LinkedIn"
+      className="h-5 w-5"
+    />
+  </a>
+  <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+    <img
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/twitter/twitter-original.svg"
+      alt="Twitter"
+      className="h-5 w-5"
+    />
+  </a>
+  <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+      alt="Facebook"
+      className="h-5 w-5"
+    />
+  </a>
+  <a href="https://www.github.com" target="_blank" rel="noopener noreferrer">
+    <img
+      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+      alt="Github"
+      className="h-5 w-5"
+    />
+  </a>
+</div>
           </div>
         </div>
       </div>

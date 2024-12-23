@@ -1,4 +1,5 @@
 import { Trophy, Star, Rocket, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';  // for navigation links
 
 const Header = () => (
   <header className="bg-gradient-to-br from-blue-500 to-purple-500 py-12">
@@ -14,6 +15,19 @@ const Header = () => (
       <p className="text-lg max-w-2xl mx-auto font-medium">
         Empowering Innovators Worldwide – Compete, Create, and Celebrate Innovation!
       </p>
+
+      {/* Navigation Bar */}
+      <nav className="mt-6">
+        <div className="flex justify-center gap-8">
+          <Link to="/profile" className="text-white hover:text-yellow-400">
+            Profile
+          </Link>
+          <Link to="/settings" className="text-white hover:text-yellow-400">
+            Settings
+          </Link>
+        </div>
+      </nav>
+
       <div className="flex justify-center gap-6 mt-6">
         <div className="flex flex-col items-center">
           <Trophy className="w-10 h-10 text-yellow-300" />

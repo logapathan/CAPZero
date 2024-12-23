@@ -17,7 +17,6 @@ const RegistrationForm = () => {
     confirmPassword: '',
     linkedinProfile: '',
     profilePhoto: null,
-    userType: '',
     softwareExpertise: [],
     levelOfExpertise: '',
     topicsOfInterest: []
@@ -69,8 +68,6 @@ const RegistrationForm = () => {
       newErrors.confirmPassword = 'Passwords do not match';
     }
     
-    // User type validation
-    if (!formData.userType) newErrors.userType = 'User type is required';
     
     // Level of expertise validation
     if (!formData.levelOfExpertise) newErrors.levelOfExpertise = 'Expertise level is required';
@@ -175,7 +172,6 @@ const RegistrationForm = () => {
         confirmPassword: '',
         linkedinProfile: '',
         profilePhoto: null,
-        userType: '',
         softwareExpertise: [],
         levelOfExpertise: '',
         topicsOfInterest: []
@@ -275,21 +271,9 @@ const RegistrationForm = () => {
               <span className="text-sm text-red-500">{errors.profilePhoto}</span>}
           </div>
 
-          {/* User Type and Expertise */}
+          {/*Expertise */}
           <div className="space-y-4">
-            <Select
-              value={formData.userType}
-              onValueChange={(value) => setFormData(prev => ({ ...prev, userType: value }))}
-            >
-              <SelectTrigger className={errors.userType ? 'border-red-500' : ''}>
-                <SelectValue placeholder="Select User Type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="personal">Personal</SelectItem>
-                <SelectItem value="creator">Creator</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.userType && <span className="text-sm text-red-500">{errors.userType}</span>}
+            
 
             <Select
               value={formData.levelOfExpertise}
