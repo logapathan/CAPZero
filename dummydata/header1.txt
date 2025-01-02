@@ -1,0 +1,63 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
+
+const Header = () => {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
+  return (
+    <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6 shadow-md">
+      <div className="container mx-auto flex justify-between items-center px-6">
+        {/* Logo and Title */}
+        <div className="flex items-center space-x-4">
+          <h1 className="text-3xl font-bold text-white cursor-pointer" onClick={() => handleNavigation('/')}>
+            CAPZERO
+          </h1>
+          <span className="text-xl text-gray-200">Innovating the Future of Design</span>
+        </div>
+
+        {/* Navbar */}
+        <nav className="flex space-x-6 text-lg font-medium">
+          <button
+            onClick={() => handleNavigation('/')}
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            Home
+          </button>
+          <button
+            onClick={() => handleNavigation('/contests')}
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            Contests
+          </button>
+          <button
+            onClick={() => handleNavigation('/create-contest')}
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            Create Contest
+          </button>
+          <button
+            onClick={() => handleNavigation('/about')}
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            About Us
+          </button>
+        </nav>
+
+        {/* CTA Button */}
+        <button
+          onClick={() => handleNavigation('/login')}
+          className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105"
+        >
+          Log In
+        </button>
+      </div>
+    </header>
+  );
+};
+
+export default Header;

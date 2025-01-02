@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Upload } from 'lucide-react';
+import axios from 'axios';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -128,42 +127,35 @@ const RegistrationForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus({ message: '', isError: false });
-
+  
     if (!validateForm()) {
       setIsSubmitting(false);
       setSubmitStatus({
         message: 'Please correct the errors before submitting',
-        isError: true
+        isError: true,
       });
       return;
     }
-
+  
     try {
       const formDataToSend = new FormData();
-      Object.keys(formData).forEach(key => {
+      Object.keys(formData).forEach((key) => {
         if (key === 'softwareExpertise' || key === 'topicsOfInterest') {
           formDataToSend.append(key, JSON.stringify(formData[key]));
         } else {
           formDataToSend.append(key, formData[key]);
         }
       });
-
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        body: formDataToSend
+  
+      const response = await axios.post('http://localhost:5000/api/register', formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      const data = await response.json();
-
+  
       setSubmitStatus({
         message: 'Registration successful! Please check your email for verification.',
-        isError: false
+        isError: false,
       });
-
+  
       // Reset form after successful submission
       setFormData({
         name: '',
@@ -174,17 +166,18 @@ const RegistrationForm = () => {
         profilePhoto: null,
         softwareExpertise: [],
         levelOfExpertise: '',
-        topicsOfInterest: []
+        topicsOfInterest: [],
       });
     } catch (error) {
       setSubmitStatus({
-        message: error.message || 'Registration failed. Please try again.',
-        isError: true
+        message: error.response?.data?.message || 'Registration failed. Please try again.',
+        isError: true,
       });
     } finally {
       setIsSubmitting(false);
     }
   };
+  
 
   return (
     <Card className="w-full max-w-2xl mx-auto">

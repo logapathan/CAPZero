@@ -35,19 +35,30 @@ const CreateContest = ()=> {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ message: '', isError: false });
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
+    id: '',
+    title: '',
     category: '',
-    dateTime: '',
-    duration: '',
     type: '',
     problemStatement: '',
     constraint: '',
     constraintValue: '',
     material: '',
     questionImage: null,
-    referenceModel: null
-  });
+    referenceModel: null,
+    hostInfo: {
+      name: ""
+      
+  },
+  details: {
+    startDate: "",
+    startTime: "",
+    duration: "",
+    format: "",
+    access: "",
+    maxParticipants: 500,
+    softwareRequired: "",
+    description: ""
+}});
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
@@ -71,12 +82,21 @@ const CreateContest = ()=> {
     const newErrors = {};
     
     // Required fields for all contest types
-    if (!formData.name.trim()) newErrors.name = 'Contest name is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
+    if (!formData.title.trim()) newErrors.name = 'Contest name is required';
     if (!formData.category) newErrors.category = 'Category is required';
-    if (!formData.dateTime) newErrors.dateTime = 'Date and time is required';
-    if (!formData.duration) newErrors.duration = 'Duration is required';
     if (!formData.type) newErrors.type = 'Contest type is required';
+    if (!formData.hostInfo.name) newErrors.type = 'Host Name is required';
+    if (!formData.details.description.trim()) newErrors.description = 'Description is required';
+    if (!formData.details.startDate) newErrors.startDate='Start Date is required';
+    if (!formData.details.startTime.trim()) newErrors.startTime = 'Start time is required';
+    if (!formData.details.duration.trim()) newErrors.duration = 'Duration is required';
+    if (!formData.details.format.trim()) newErrors.format = 'Format is required';
+    if (!formData.details.access.trim()) newErrors.access = 'Access type is required';
+    if (isNaN(formData.details.maxParticipants) || formData.details.maxParticipants <= 0) {
+      newErrors.maxParticipants = 'Max participants must be a positive number';
+    }
+    if (!formData.details.softwareRequired.trim()) newErrors.softwareRequired = 'Software requirement is required';
+    if (!formData.details.description.trim()) newErrors.description = 'Description is required';
     
     // Type-specific validation
     if (formData.type === 'creative') {
@@ -89,6 +109,7 @@ const CreateContest = ()=> {
       if (!formData.material) newErrors.material = 'Material is required';
       if (!formData.questionImage) newErrors.questionImage = 'Question image is required';
       if (!formData.referenceModel) newErrors.referenceModel = 'Reference model is required';
+
     }
 
     setErrors(newErrors);

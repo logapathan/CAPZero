@@ -1,0 +1,58 @@
+import React from "react";
+import { Globe } from "lucide-react";
+
+const ProfilePage = () => {
+  return (
+    <div className="flex flex-col bg-gray-100 min-h-screen">
+      {/* Navbar */}
+      <nav className="w-full bg-white shadow-md py-4 px-6">
+        <div className="text-xl font-bold">Navbar</div>
+      </nav>
+
+      {/* Main Content */}
+      <div className="flex flex-row justify-center mt-6 px-6 space-x-4">
+        {/* Left Section: Profile Card */}
+        <div className="bg-white rounded-lg shadow-lg w-[700px]">
+          {/* Cover Image */}
+          <div className="relative">
+            <div className="h-32 bg-gray-200 rounded-t-lg"></div> {/* Cover Placeholder */}
+            {/* Profile Picture */}
+            <div className="absolute top-16 left-6 w-24 h-24 bg-gray-300 border-4 border-white rounded-full"></div>
+          </div>
+
+          {/* Profile Details */}
+          <div className="mt-12 ml-6">
+            <h2 className="text-2xl font-semibold">Narendiran V.B</h2>
+            <p className="text-gray-600">Student at IIITDM Kurnool</p>
+            <p className="text-gray-500 mt-1">Kallakurichi, Tamil Nadu, India</p>
+            <div className="mt-4">
+              <a
+                href="#"
+                className="text-blue-600 hover:underline flex items-center gap-1"
+              >
+                <Globe size={16} />
+                Contact Info
+              </a>
+            </div>
+          </div>
+
+          {/* Open to Work Section */}
+          <div className="mt-6 bg-blue-50 mx-6 p-4 rounded-md">
+            <h3 className="font-bold text-blue-600">Open to work</h3>
+            <p className="text-gray-600 text-sm">
+              Software Developer, Web Developer, Web Designer
+            </p>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full min-h-[400px]">
+          {/* Placeholder for future content */}
+          <p className="text-gray-500 text-center">Right Section (Empty)</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProfilePage;

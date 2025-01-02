@@ -1,11 +1,14 @@
 import React, { Profiler } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CreateContest from './CreateContest';  // Adjust the import path as necessary
+import CreateContest from './Component/CreateContest';  // Adjust the import path as necessary
 import { Card, CardContent } from "@/components/ui/card";  // Assuming you have your components set up
-import RegistrationForm from './RegistrationForm';
-import Profile from './Profile'
-import ContestPage from './ContestPage';
-import Box from './Box';
+import RegistrationForm from './Component/RegistrationForm';
+import Profile from './Component/Profile/Profile';
+import ContestPage from './Component/ContestPage';
+import Contest from './Component/Contest';
+
+import ViewContest from './Component/ViewContest';
+
 
 
 const App = () => {
@@ -16,17 +19,17 @@ const App = () => {
         <Route path='/' element={<ContestPage />} />
         
         {/* Create Contest Route */}
-        <Route path="/contests" element={<CreateContest />} />
+        <Route path="/contests" element={<div className='w-full max-w-3xl mx-auto'><CreateContest /> </div>} />
         
         {/* Other routes can go here */}
-        <Route path="/k" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path='/l' element={<RegistrationForm />} />
-        <Route path = "/n" element={<Box />} />
+        <Route path = "/n" element={<ViewContest />} />
+       
         
       </Routes>
     </Router>
   );
 };
 
-// Home page component as an example
 export default App;
