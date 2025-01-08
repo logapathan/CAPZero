@@ -1,9 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, CircleUserRound } from 'lucide-react';
+import { Menu, CircleUserRound, Bell, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-
 
 const Header = () => {
   const navigate = useNavigate();
@@ -15,95 +13,40 @@ const Header = () => {
   return (
     <header className="relative bg-gradient-to-br from-indigo-500 via-blue-500 to-teal-500 text-white py-8">
       {/* Background Gradient */}
-      <div className="absolute  bg-gradient-to-br from-indigo-400 via-blue-300 to-teal-200 opacity-30 animate-pulse"></div>
+      <div className="absolute bg-gradient-to-br from-indigo-400 via-blue-300 to-teal-200 opacity-30 animate-pulse"></div>
 
-      <div className="container mx-auto flex justify-between items-center px-8 relative z-10">
-        {/* Logo and Title */}
-        <motion.div
-          className="flex items-center space-x-4"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-        >
-          
-          <motion.img src={""} alt="Description of the image"
-            className="w-35 h-50 object-cover rounded-lg transition-colors"
-            onClick={() => handleNavigation('/')}
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-           
-          </motion.img>
-        </motion.div>
+      <div className="container mx-auto flex items-center px-8 relative z-10">
+        {/* Logo Section */}
+        <div className="flex items-center space-x-2">
+          <img src="/path/to/logo.png" alt="Logo" className="h-10" />
+          <h1 className="text-2xl font-bold text-blue-800">CAPZERO</h1>
+        </div>
 
-        {/* Navigation Bar */}
-        {/* <nav className="hidden md:flex space-x-12 text-lg font-medium">
-          <motion.a
-            onClick={() => handleNavigation('/')}
-            className="relative text-white"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            Home
-            <motion.div
-              className="absolute bottom-0 left-0 w-full h-1 bg-teal-500 transform scale-x-0 origin-left hover:scale-x-100 transition-transform duration-300"
-            />
-          </motion.a>
-          <motion.a
-            onClick={() => handleNavigation('/contests')}
-            className="relative text-white"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            Contests
-            <motion.div
-              className="absolute bottom-0 left-0 w-full h-1 bg-teal-500 transform scale-x-0 origin-left hover:scale-x-100 transition-transform duration-300"
-            />
-          </motion.a>
-          <motion.a
-            onClick={() => handleNavigation('/create-contest')}
-            className="relative text-white"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            Create Contest
-            <motion.div
-              className="absolute bottom-0 left-0 w-full h-1 bg-teal-500 transform scale-x-0 origin-left hover:scale-x-100 transition-transform duration-300"
-            />
-          </motion.a>
-          <motion.a
-            onClick={() => handleNavigation('/about')}
-            className="relative text-white"
-            whileHover={{ scale: 1.1 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
-            About Us
-            <motion.div
-              className="absolute bottom-0 left-0 w-full h-1 bg-teal-500 transform scale-x-0 origin-left hover:scale-x-100 transition-transform duration-300"
-            />
-          </motion.a>
-        </nav> */}
+        {/* Navigation Links - Right-Aligned */}
+        <nav className="flex items-center space-x-8 text-lg font-medium text-white ml-auto mr-5">
+          <a href="#learning" className="text-white hover:text-blue-800">Contest</a>
+          <a href="#learning" className="text-white hover:text-blue-800">Learning</a>
+          <a href="#community" className="text-white hover:text-blue-800">Community</a>
+          <a href="#practice" className="text-white hover:text-blue-800">Practice</a>
+          <a href="#contact" className="text-white hover:text-blue-800">Contact</a>
+        </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
+        {/* Icons Section */}
+        <div className="flex items-center space-x-4">
+          <button className="text-black bg-transparent hover:text-blue-800">
+            <Bell className="w-8 h-8" />
+          </button>
+          <button className="text-black bg-transparent  hover:text-blue-800">
+            <Heart className="w-8 h-8" />
+          </button>
           <button
-            className="text-white hover:text-gray-200"
+            className="text-white hover:text-gray-200 md:hidden"
             aria-label="Open Menu"
           >
             <Menu className="h-6 w-6" />
           </button>
         </div>
-
-        {/* CTA Button */}
-        <motion.button
-          onClick={() => handleNavigation('/profile')}
-          className="bg-teal-500 text-white w-12 h-12 ml-0 flex items-center justify-center font-semibold shadow-xl transform hover:scale-105 transition-all hover:bg-teal-600 rounded-full"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        >
-          <CircleUserRound />
-        </motion.button>
-      </div> 
+      </div>
 
       {/* Hero Section */}
       <div className="text-center mt-4">

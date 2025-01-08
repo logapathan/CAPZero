@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Upload } from 'lucide-react';
 import axios from 'axios';
+import Navbar from './Profile/Navbar'
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -180,6 +181,9 @@ const RegistrationForm = () => {
   
 
   return (
+    <>
+    <Navbar />
+    <div className='min-h-screen pt-20'>
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Create Your Account</CardTitle>
@@ -348,6 +352,8 @@ const RegistrationForm = () => {
         </form>
       </CardContent>
     </Card>
+    </div>
+    </>
   );
 };
 

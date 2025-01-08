@@ -17,9 +17,11 @@ const App = () => {
       <Routes>
         {/* Home Page Route */}
         <Route path='/' element={<ContestPage />} />
+        <Route path='/view' element={<Contest />} />
         
         {/* Create Contest Route */}
-        <Route path="/contests" element={<div className='w-full max-w-3xl mx-auto'><CreateContest /> </div>} />
+        <Route path="/contest/:id" element={<Contest /> } />
+        <Route path="/contests" element={<CreateContest /> } />
         
         {/* Other routes can go here */}
         <Route path="/profile" element={<Profile />} />

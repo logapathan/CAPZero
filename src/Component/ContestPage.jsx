@@ -3,6 +3,7 @@ import { Clock, Trophy, Users, ChevronRight, ArrowLeft, ArrowRight } from 'lucid
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from './Header';
 import { useNavigate } from "react-router-dom";
+import Footer from './Footer';
 
 const ContestPage = () => {
   const [featuredContests] = useState([
@@ -113,6 +114,10 @@ const ContestPage = () => {
       navigate("/k");
       closeModal(); // Close modal after submission
     }
+  };
+
+  const handleViewDetails = (CID) => {
+    navigate(`/contest/${CID}`);
   };
 
 
@@ -263,10 +268,10 @@ const ContestPage = () => {
                   <span className="text-sm">{contest.participants} participants</span>
                 </div>
               </div>
-              <a className="flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium cursor-pointer">
+              <button onClick={() => handleViewDetails(contest.id)} className="flex items-center text-blue-600 hover:text-blue-800 transition-colors text-sm font-medium cursor-pointer">
                 View Details
                 <ChevronRight className="h-4 w-4 ml-1" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -326,6 +331,7 @@ const ContestPage = () => {
             </div>
           </div>
         )}
+        <Footer />
     </>
   );
 };

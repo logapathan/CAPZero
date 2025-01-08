@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Upload } from 'lucide-react';
+import Navbar from './Profile/Navbar';
 
 const materials = [
   'Aluminum 6061',
@@ -45,20 +46,29 @@ const CreateContest = ()=> {
     material: '',
     questionImage: null,
     referenceModel: null,
-    hostInfo: {
-      name: ""
-      
-  },
   details: {
     startDate: "",
     startTime: "",
     duration: "",
-    format: "",
     access: "",
     maxParticipants: 500,
     softwareRequired: "",
     description: ""
 }});
+// const [formData, setFormData] = useState({
+//   name: '',
+//   description: '',
+//   category: '',
+//   dateTime: '',
+//   duration: '',
+//   type: '',
+//   problemStatement: '',
+//   constraint: '',
+//   constraintValue: '',
+//   material: '',
+//   questionImage: null,
+//   referenceModel: null
+// });
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
@@ -82,22 +92,23 @@ const CreateContest = ()=> {
     const newErrors = {};
     
     // Required fields for all contest types
-    if (!formData.title.trim()) newErrors.name = 'Contest name is required';
-    if (!formData.category) newErrors.category = 'Category is required';
-    if (!formData.type) newErrors.type = 'Contest type is required';
-    if (!formData.hostInfo.name) newErrors.type = 'Host Name is required';
-    if (!formData.details.description.trim()) newErrors.description = 'Description is required';
-    if (!formData.details.startDate) newErrors.startDate='Start Date is required';
-    if (!formData.details.startTime.trim()) newErrors.startTime = 'Start time is required';
-    if (!formData.details.duration.trim()) newErrors.duration = 'Duration is required';
-    if (!formData.details.format.trim()) newErrors.format = 'Format is required';
-    if (!formData.details.access.trim()) newErrors.access = 'Access type is required';
-    if (isNaN(formData.details.maxParticipants) || formData.details.maxParticipants <= 0) {
-      newErrors.maxParticipants = 'Max participants must be a positive number';
-    }
-    if (!formData.details.softwareRequired.trim()) newErrors.softwareRequired = 'Software requirement is required';
-    if (!formData.details.description.trim()) newErrors.description = 'Description is required';
-    
+    // 
+    if (!formData.id.trim()) newErrors.id = 'ID is required';
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (!formData.category.trim()) newErrors.category = 'Category is required';
+    if (!formData.type.trim()) newErrors.type = 'Type is required';
+   // if (!formData.hostInfo.name.trim()) newErrors.hostName = 'Host name is required';
+    if (!formData.details.startDate.trim()) newErrors.startDate = 'Start date is required';
+  if (!formData.details.startTime.trim()) newErrors.startTime = 'Start time is required';
+  if (!formData.details.duration.trim()) newErrors.duration = 'Duration is required';
+//  if (!formData.details.format.trim()) newErrors.format = 'Format is required';
+  if (!formData.details.access.trim()) newErrors.access = 'Access type is required';
+  if (isNaN(formData.details.maxParticipants) || formData.details.maxParticipants <= 0) {
+    newErrors.maxParticipants = 'Max participants must be a positive number';
+  }
+  if (!formData.details.softwareRequired.trim()) newErrors.softwareRequired = 'Software requirement is required';
+  if (!formData.details.description.trim()) newErrors.description = 'Description is required';
+
     // Type-specific validation
     if (formData.type === 'creative') {
       if (!formData.problemStatement?.trim()) {
@@ -109,7 +120,6 @@ const CreateContest = ()=> {
       if (!formData.material) newErrors.material = 'Material is required';
       if (!formData.questionImage) newErrors.questionImage = 'Question image is required';
       if (!formData.referenceModel) newErrors.referenceModel = 'Reference model is required';
-
     }
 
     setErrors(newErrors);
@@ -169,6 +179,9 @@ const CreateContest = ()=> {
   };
 
   return (
+    <>
+    <Navbar />
+    <div className='min-h-screen pt-20'>
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Create New Contest</CardTitle>
@@ -177,14 +190,15 @@ const CreateContest = ()=> {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Contest Information */}
           <div className="space-y-4">
+
             <Input
-              name="name"
-              placeholder="Contest Name"
-              value={formData.name}
+              name="title"
+              placeholder="Contest title"
+              value={formData.title}
               onChange={handleInputChange}
-              className={errors.name ? 'border-red-500' : ''}
+              className={errors.title ? 'border-red-500' : ''}
             />
-            {errors.name && <span className="text-sm text-red-500">{errors.name}</span>}
+            {errors.title && <span className="text-sm text-red-500">{errors.title}</span>}
 
             <Textarea
               name="description"
@@ -212,24 +226,87 @@ const CreateContest = ()=> {
             {errors.category && <span className="text-sm text-red-500">{errors.category}</span>}
 
             <Input
-              type="datetime-local"
-              name="dateTime"
-              value={formData.dateTime}
-              onChange={handleInputChange}
-              className={errors.dateTime ? 'border-red-500' : ''}
+              type="date"
+              name="startDate"
+              value={formData.details.startDate}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  details: {
+                    ...prev.details,
+                    startDate: e.target.value,
+                  },
+                }))
+              }
+              className={errors.startDate ? 'border-red-500' : ''}
             />
-            {errors.dateTime && <span className="text-sm text-red-500">{errors.dateTime}</span>}
+            {errors.startDate && <span className="text-sm text-red-500">{errors.startDate}</span>}
 
+            <Input
+              type="time"
+              name="startDate"
+              value={formData.details.startTime}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  details: {
+                    ...prev.details,
+                    startTime: e.target.value,
+                  },
+                }))
+              }
+              className={errors.startTime ? 'border-red-500' : ''}
+            />
+            {errors.startTime && <span className="text-sm text-red-500">{errors.startTime}</span>} 
             <Input
               type="number"
               name="duration"
               placeholder="Duration (in minutes)"
-              value={formData.duration}
-              onChange={handleInputChange}
+              value={formData.details.duration}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  details: {
+                    ...prev.details,
+                    duration: parseInt(e.target.value, 10) // Ensure numeric input
+                  },
+                }))
+              }
               className={errors.duration ? 'border-red-500' : ''}
             />
             {errors.duration && <span className="text-sm text-red-500">{errors.duration}</span>}
-
+            <Select
+              value={formData.details.access}
+              onValueChange={(value) => setFormData(prev => ({ ...prev, details:{...prev.details, access: value,}, }))}
+            >
+              <SelectTrigger className={errors.access ? 'border-red-500' : ''}>
+                <SelectValue placeholder="Select Contest Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Public">Public</SelectItem>
+                <SelectItem value="Private">Private</SelectItem>
+              </SelectContent>
+            </Select>
+            {errors.access && <span className="text-sm text-red-500">{errors.access}</span>}
+            
+            <Input
+              type="number"
+              name="duration"
+              placeholder="N of Participants (Max)"
+              value={formData.details.maxParticipants}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  details: {
+                    ...prev.details,
+                    maxParticipants: parseInt(e.target.value, 10) // Ensure numeric input
+                  },
+                }))
+              }
+              className={errors.maxParticipants ? 'border-red-500' : ''}
+            />
+            {errors.maxParticipants && <span className="text-sm text-red-500">{errors.maxParticipants}</span>}
+            
             <Select
               value={formData.type}
               onValueChange={(value) => setFormData(prev => ({ ...prev, type: value }))}
@@ -368,7 +445,7 @@ const CreateContest = ()=> {
           {/* Submit Button */}
           <Button 
             type="submit" 
-            className="w-full"
+            className="w-full text-black"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Creating Contest...' : 'Create Contest'}
@@ -385,6 +462,8 @@ const CreateContest = ()=> {
         </form>
       </CardContent>
     </Card>
+    </div>
+    </>
   );
 };
 
