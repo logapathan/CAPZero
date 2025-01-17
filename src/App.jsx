@@ -8,6 +8,7 @@ import ContestPage from './Component/ContestPage';
 import Contest from './Component/Contest';
 
 import ViewContest from './Component/ViewContest';
+import SignIn from './Component/SignIn';
 
 
 
@@ -16,7 +17,9 @@ const App = () => {
     <Router>
       <Routes>
         {/* Home Page Route */}
+        <Route path='/sign' element={<SignIn />} />
         <Route path='/' element={<ContestPage />} />
+
         <Route path='/view' element={<Contest />} />
         
         {/* Create Contest Route */}

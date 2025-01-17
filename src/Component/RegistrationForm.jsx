@@ -18,7 +18,6 @@ const RegistrationForm = () => {
     linkedinProfile: '',
     profilePhoto: null,
     softwareExpertise: [],
-    levelOfExpertise: '',
     topicsOfInterest: []
   });
 
@@ -70,7 +69,7 @@ const RegistrationForm = () => {
     
     
     // Level of expertise validation
-    if (!formData.levelOfExpertise) newErrors.levelOfExpertise = 'Expertise level is required';
+
     
     // Check if at least one software expertise is selected
     if (formData.softwareExpertise.length === 0) {
@@ -166,7 +165,6 @@ const RegistrationForm = () => {
         linkedinProfile: '',
         profilePhoto: null,
         softwareExpertise: [],
-        levelOfExpertise: '',
         topicsOfInterest: [],
       });
     } catch (error) {
@@ -269,25 +267,7 @@ const RegistrationForm = () => {
           </div>
 
           {/*Expertise */}
-          <div className="space-y-4">
-            
-
-            <Select
-              value={formData.levelOfExpertise}
-              onValueChange={(value) => setFormData(prev => ({ ...prev, levelOfExpertise: value }))}
-            >
-              <SelectTrigger className={errors.levelOfExpertise ? 'border-red-500' : ''}>
-                <SelectValue placeholder="Select Expertise Level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="beginner">Beginner</SelectItem>
-                <SelectItem value="intermediate">Intermediate</SelectItem>
-                <SelectItem value="expert">Expert</SelectItem>
-              </SelectContent>
-            </Select>
-            {errors.levelOfExpertise && 
-              <span className="text-sm text-red-500">{errors.levelOfExpertise}</span>}
-          </div>
+         
 
           {/* Software Expertise */}
           <div className="space-y-2">
