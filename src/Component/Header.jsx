@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, CircleUserRound, Bell, Heart } from 'lucide-react';
+import { Menu, CircleUserRound, Bell, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Header = () => {
@@ -21,31 +21,28 @@ const Header = () => {
           <img src="/path/to/logo.png" alt="Logo" className="h-10" />
           <h1 className="text-2xl font-bold text-blue-800">CAPZERO</h1>
         </div>
+{/* Navigation Links - Right-Aligned */}
+<nav className="flex items-center space-x-12 text-lg font-medium text-white ml-auto mr-8">
+  <a href="#learning" className="text-white hover:text-blue-800">Contest</a>
+  <a href="#learning" className="text-white hover:text-blue-800">Learning</a>
+  <a href="#community" className="text-white hover:text-blue-800">Community</a>
+  <a href="#practice" className="text-white hover:text-blue-800">Practice</a>
+  <a href="#contact" className="text-white hover:text-blue-800">Contact</a>
+</nav>
 
-        {/* Navigation Links - Right-Aligned */}
-        <nav className="flex items-center space-x-8 text-lg font-medium text-white ml-auto mr-5">
-          <a href="#learning" className="text-white hover:text-blue-800">Contest</a>
-          <a href="#learning" className="text-white hover:text-blue-800">Learning</a>
-          <a href="#community" className="text-white hover:text-blue-800">Community</a>
-          <a href="#practice" className="text-white hover:text-blue-800">Practice</a>
-          <a href="#contact" className="text-white hover:text-blue-800">Contact</a>
-        </nav>
+{/* Icons Section */}
+<div className="flex items-center space-x-6">
+  <button className="text-black bg-transparent hover:text-blue-800">
+    <Bell className="w-8 h-8" />
+  </button>
+  <button className="text-black bg-transparent hover:text-blue-800 border-2 border-black rounded-full p-3">
+    <User className="w-8 h-8" />
+  </button>
+  <button className="text-white hover:text-gray-200 md:hidden" aria-label="Open Menu">
+    <Menu className="h-6 w-6" />
+  </button>
+</div>
 
-        {/* Icons Section */}
-        <div className="flex items-center space-x-4">
-          <button className="text-black bg-transparent hover:text-blue-800">
-            <Bell className="w-8 h-8" />
-          </button>
-          <button className="text-black bg-transparent  hover:text-blue-800">
-            <Heart className="w-8 h-8" />
-          </button>
-          <button
-            className="text-white hover:text-gray-200 md:hidden"
-            aria-label="Open Menu"
-          >
-            <Menu className="h-6 w-6" />
-          </button>
-        </div>
       </div>
 
       {/* Hero Section */}

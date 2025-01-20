@@ -12,6 +12,7 @@ import SignIn from './Component/SignIn';
 
 
 
+
 const App = () => {
   return (
     <Router>
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path='/l' element={<RegistrationForm />} />
         <Route path = "/n" element={<ViewContest />} />
+       
        
         
       </Routes>

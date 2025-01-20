@@ -69,27 +69,108 @@ const ContestPage = () => {
     }
   ]);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [registeredContests] = useState([
+    {
+      id: 1,
+      title: "Automotive Design Challenge",
+      description: "Design next-gen EV chassis",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "2 days",
+      participants: 156,
+      category: "Vehicle Design",
+      prize: "$3000"
+    },
+    {
+      id: 2,
+      title: "Industrial Equipment",
+      description: "Smart manufacturing tools",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "5 days",
+      participants: 89,
+      category: "Industrial",
+      prize: "$2500"
+    },
+    {
+      id: 3,
+      title: "Architecture Challenge",
+      description: "Sustainable components",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "3 days",
+      participants: 234,
+      category: "Architecture",
+      prize: "$4000"
+    },
+    {
+      id: 4,
+      title: "Product Design Sprint",
+      description: "Electronics enclosure",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "6 days",
+      participants: 178,
+      category: "Product Design",
+      prize: "$2000"
+    },
+    {
+      id: 5,
+      title: "Aerospace Innovation",
+      description: "Aircraft component design",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "4 days",
+      participants: 145,
+      category: "Aerospace",
+      prize: "$5000"
+    },
+    {
+      id: 6,
+      title: "Medical Device Design",
+      description: "Healthcare equipment",
+      image: "https://leetcode.com/_next/static/images/biweekly-default-f5a8fc3be85b6c9175207fd8fd855d47.png",
+      timeLeft: "7 days",
+      participants: 167,
+      category: "Medical",
+      prize: "$3500"
+    }
+  ]);
+
+  const [currentIndexFeatured, setCurrentIndexFeatured] = useState(0);
+  const [currentIndexRegistered, setCurrentIndexRegistered] = useState(0);
   const contestsPerPage = 4;
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
+  const nextSlideFeatured = () => {
+    setCurrentIndexFeatured((prevIndex) =>
       prevIndex + contestsPerPage >= featuredContests.length ? 0 : prevIndex + contestsPerPage
     );
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
+  const prevSlideFeatured = () => {
+    setCurrentIndexFeatured((prevIndex) =>
       prevIndex - contestsPerPage < 0 ? Math.max(0, featuredContests.length - contestsPerPage) : prevIndex - contestsPerPage
     );
   };
 
+  const nextSlideRegistered = () => {
+    setCurrentIndexRegistered((prevIndex) =>
+      prevIndex + contestsPerPage >= registeredContests.length ? 0 : prevIndex + contestsPerPage
+    );
+  };
+
+  const prevSlideRegistered = () => {
+    setCurrentIndexRegistered((prevIndex) =>
+      prevIndex - contestsPerPage < 0 ? Math.max(0, registeredContests.length - contestsPerPage) : prevIndex - contestsPerPage
+    );
+  };
+
+  const visibleFeaturedContests = featuredContests.slice(currentIndexFeatured, currentIndexFeatured + contestsPerPage);
+  const visibleRegisteredContests = registeredContests.slice(currentIndexRegistered, currentIndexRegistered + contestsPerPage);
+
   const navigate = useNavigate();
+  const handleViewDetails = (CID) => {
+    navigate(`/contest/${CID}`);
+  };
+ 
   const handleButtonClick = () => {
     navigate("/contests");
   };
-
-  const visibleContests = featuredContests.slice(currentIndex, currentIndex + contestsPerPage);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contestId, setContestId] = useState("");
@@ -116,9 +197,6 @@ const ContestPage = () => {
     }
   };
 
-  const handleViewDetails = (CID) => {
-    navigate(`/contest/${CID}`);
-  };
 
 
   return (
@@ -174,31 +252,28 @@ const ContestPage = () => {
           </Card>
         </div>
 
-        {/* Featured Contests Section */}
-        <div className="bg-white rounded-2xl p-8 shadow-md">
+        <div className="bg-white rounded-2xl p-8 shadow-md mb-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">Featured Contests</h2>
             <div className="flex gap-2">
               <button
-                onClick={prevSlide}
+                onClick={prevSlideFeatured}
                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                disabled={currentIndex === 0}
                 aria-label="Previous Slide"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
               <button
-                onClick={nextSlide}
+                onClick={nextSlideFeatured}
                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-                disabled={currentIndex + contestsPerPage >= featuredContests.length}
                 aria-label="Next Slide"
               >
                 <ArrowRight className="h-5 w-5" />
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-5">
-            {visibleContests.map((contest) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {visibleFeaturedContests.map((contest) => (
               <Card key={contest.id} className="hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100">
                 <CardHeader className="space-y-3">
                   <div className="overflow-hidden rounded-lg">
@@ -208,10 +283,8 @@ const ContestPage = () => {
                       className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <div>
-                    <CardTitle className="text-base">{contest.title}</CardTitle>
-                    <CardDescription className="text-sm">{contest.description}</CardDescription>
-                  </div>
+                  <CardTitle className="text-base">{contest.title}</CardTitle>
+                  <CardDescription className="text-sm">{contest.description}</CardDescription>
                 </CardHeader>
                 <CardFooter className="flex justify-between text-xs text-gray-600">
                   <div className="flex items-center gap-1">
@@ -226,7 +299,63 @@ const ContestPage = () => {
               </Card>
             ))}
           </div>
-                                                                                          {/* Past Contest  */}
+        </div>
+        <div className="container mx-auto px-4 py-8 max-w-7xl bg-gray-50">
+        {/* Registered Contests Section */}
+        <div className="bg-white rounded-2xl p-8 shadow-md">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Registered Contests</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={prevSlideRegistered}
+                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                aria-label="Previous Slide"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <button
+                onClick={nextSlideRegistered}
+                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                aria-label="Next Slide"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {visibleRegisteredContests.map((contest) => (
+              <Card key={contest.id} className="hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100">
+                <CardHeader className="space-y-3">
+                  <div className="overflow-hidden rounded-lg">
+                    <img
+                      src={contest.image}
+                      alt={contest.title}
+                      className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardTitle className="text-base">{contest.title}</CardTitle>
+                  <CardDescription className="text-sm">{contest.description}</CardDescription>
+                </CardHeader>
+                <CardFooter className="flex justify-between text-xs text-gray-600">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    <span>{contest.timeLeft}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    <span>{contest.participants}</span>
+                  </div>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          </div>
+
+          
+{/* Past Contest  */}
+
+
+<div className="container mx-auto px-4 py-8 max-w-7xl bg-gray-50">
           <div className="bg-white rounded-2xl p-8 ">
             <h2 className="text-2xl font-bold mb-6 text-gray-800">Past Contests</h2>
             <div className="space-y-4">
@@ -281,6 +410,8 @@ const ContestPage = () => {
 </div>
         </div>
       </div>
+      
+        </div>
       {/* Join Contest Modal */}
       {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
@@ -331,6 +462,7 @@ const ContestPage = () => {
             </div>
           </div>
         )}
+        
         <Footer />
     </>
   );
