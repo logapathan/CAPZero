@@ -26,6 +26,7 @@ const RegistrationForm = () => {
     softwareExpertise: [],
     topicsOfInterest: [],
   });
+  const [error, setError] = useState({ value: false, message: "" });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -112,6 +113,7 @@ const RegistrationForm = () => {
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
+    // console.log(file);
     if (file) {
       if (file.size > 5000000) {
         // 5MB limit
@@ -156,14 +158,24 @@ const RegistrationForm = () => {
           formDataToSend.append(key, formData[key]);
         }
       });
-      console.log(formData);
+      for (let pair of formDataToSend.entries()) {
+        console.log(pair[0], pair[1]);
+      }
 
       const response = await axios.post(
         "http://localhost:3000/register",
-        formData
+        formDataToSend
       );
       const data = response.data;
-      console.log(data);
+      try {
+        if (!data.pass) {
+          setError({ value: !data.pass, message: data.message });
+          return;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(error);
 
       setSubmitStatus({
         message:
@@ -208,6 +220,20 @@ const RegistrationForm = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Basic Information */}
               <div className="space-y-2">
+                {error.value && (
+                  <div
+                    style={{
+                      color: "red",
+                      backgroundColor: "#ffe6e6",
+                      padding: "10px",
+                      borderRadius: "5px",
+                      marginBottom: "10px",
+                      border: "1px solid red",
+                    }}
+                  >
+                    {error.message}
+                  </div>
+                )}
                 <Input
                   name="name"
                   placeholder="Full Name"
