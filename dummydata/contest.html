@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${contestData.title}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #3b82f6;
+            --accent: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.15);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(45deg);
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .badge-success {
+            background: var(--accent);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .contest-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .host-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .host-logo {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .host-info {
+            flex-grow: 1;
+        }
+
+        .host-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .follow-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .follow-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .info-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .item-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .item-value {
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .timeline {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 2rem;
+            left: 3rem;
+            right: 3rem;
+            height: 3px;
+            background: var(--gray-200);
+            z-index: 1;
+        }
+
+        .timeline-point {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .point-marker {
+            width: 4rem;
+            height: 4rem;
+            background: white;
+            border: 3px solid var(--gray-300);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-400);
+            transition: all 0.3s ease;
+        }
+
+        .point-marker.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--gray-50);
+        }
+
+        .point-marker.completed {
+            border-color: var(--accent);
+            color: white;
+            background: var(--accent);
+        }
+
+        .point-info {
+            text-align: center;
+            max-width: 120px;
+        }
+
+        .point-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.25rem;
+        }
+
+        .point-date {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        .description {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .prize-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .prize-card {
+            background: var(--gray-50);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .prize-position {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .prize-points {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-100);
+            transform: translateY(-2px);
+        }
+
+        .requirements {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .req-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .req-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-radius: 0.75rem;
+        }
+
+        .req-icon {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+                padding-left: 2rem;
+            }
+
+            .timeline-line {
+                left: 3.5rem;
+                width: 3px;
+                height: calc(100% - 4rem);
+                top: 2rem;
+            }
+
+            .timeline-point {
+                flex-direction: row;
+                width: 100%;
+            }
+
+            .point-info {
+                text-align: left;
+                padding-left: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .host-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .follow-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="contest-details">
+            <div class="header">
+                <div class="badge-container">
+                    <span class="badge badge-primary">
+                        <i class="fas fa-stopwatch"></i>
+                        ${data.type}
+                    </span>
+                    <span class="badge badge-success">
+                        <i class="fas fa-circle"></i>
+                        ${data.status}
+                    </span>
+                    <span class="badge badge-warning">
+                        <i class="fas fa-star"></i>
+                        ${data.difficulty}
+                    </span>
+                </div>
+                
+                <h1 class="contest-title">${data.title}</h1>
+                
+                <div class="host-section">
+                    <div class="host-logo">
+                        <i class="fas fa-building fa-2x"></i>
+                    </div>
+                    <div class="host-info">
+                        <p>Hosted by</p>
+                        <h3 class="host-name">${data.hostInfo.name}</h3>
+                        <p><i class="fas fa-trophy"></i> ${data.hostInfo.totalContests} contests hosted • ${data.hostInfo.activeContests} active</p>
+                    </div>
+                    <button class="follow-btn" id="followHostBtn">
+                        <i class="fas fa-plus"></i>
+                        Follow Host
+                    </button>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                        <h2>Contest Details</h2>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="item-label">Start Date</span>
+                            <span class="item-value">${formatDate(data.details.startDate)}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Start Time</span>
+                            <span class="item-value">${data.details.startTime}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Duration</span>
+                            <span class="item-value">${data.details.duration}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Format</span>
+                            <span class="item-value">${data.details.format}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Access</span>
+                            <span class="item-value">${data.details.access}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-users fa-lg"></i>
+                        <h2>Participation</h2>
+                    </div>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <span class="item-label">Registered</span>
+                            <span class="item-value" id="participantCount">${data.details.currentParticipants} / ${data.details.maxParticipants}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Registration Closes</span>
+                            <span class="item-value">${formatDate(data.details.registrationDeadline)}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">Software Required</span>
+                            <span class="item-value">${data.details.softwareRequired}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="item-label">System Requirements</span>
+                            <span class="item-value">${data.details.minimumSpecs}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <i class="fas fa-trophy fa-lg"></i>
+                        <h2>Prizes</h2>
+                    </div>
+                    <div class="prize-grid">
+                        ${Object.entries(data.details.prizes).map(([position, prize]) => `
+                            <div class="prize-card">
+                                <div class="prize-position">${position.charAt(0).toUpperCase() + position.slice(1)} Place</div>
+                                <div class="prize-points">${prize.points} Points</div>
+                                <div>${prize.badge}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h2>Contest Timeline</h2>
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    ${data.timeline.map(point => `
+                        <div class="timeline-point">
+                            <div class="point-marker ${point.status}" title="${point.label}">
+                                <i class="fas ${point.status === 'completed' ? 'fa-check' : point.id === 1 ? 'fa-flag-checkered' : point.id === data.timeline.length ? 'fa-trophy' : 'fa-clock'}"></i>
+                            </div>
+                            <div class="point-info">
+                                <div class="point-label">${point.label}</div>
+                                <div class="point-date">${formatDate(point.date)}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="description">
+                <h2>Contest Description</h2>
+                <p>${data.details.description}</p>
+                
+                <div class="requirements">
+                    <h3>Requirements</h3>
+                    <div class="req-grid">
+                        ${data.requirements.map(req => `
+                            <div class="req-item">
+                                <div class="req-icon">
+                                    <i class="fas ${req.icon}"></i>
+                                </div>
+                                <div>
+                                    <div class="req-text">${req.text}</div>
+                                    <small class="req-details">${req.details}</small>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="registerBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Register Now
+                </button>
+                <button class="btn btn-secondary" id="calendarBtn">
+                    <i class="far fa-calendar-plus"></i>
+                    Add to Calendar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample contest data (would come from backend)
+        const contestData = {
+            id: "cad-123",
+            title: "Advanced Mechanical Component Design Challenge",
+            type: "Race Against Time",
+            status: "Upcoming",
+            difficulty: "Intermediate",
+            hostInfo: {
+                name: "Autodesk & Engineering Solutions Ltd.",
+                logo: "company-logo.png",
+                followStatus: false,
+                totalContests: 15,
+                activeContests: 3
+            },
+            details: {
+                startDate: "2025-01-15",
+                startTime: "10:00 AM GMT",
+                duration: "4 Hours",
+                format: "Individual",
+                access: "Public",
+                maxParticipants: 500,
+                currentParticipants: 142,
+                registrationDeadline: "2025-01-14",
+                softwareRequired: "AutoCAD 2024",
+                minimumSpecs: "8GB RAM, 4GB Graphics",
+                description: "This race-against-time challenge tests your ability to quickly and accurately design mechanical components under pressure. Participants will need to demonstrate their expertise in mechanical design while working efficiently under time constraints.",
+                prizes: {
+                    first: { points: 1000, badge: "Gold Designer" },
+                    second: { points: 750, badge: "Silver Designer" },
+                    third: { points: 500, badge: "Bronze Designer" }
+                },
+                rules: [
+                    "All designs must be original work",
+                    "Time extensions will not be granted",
+                    "Multiple submissions are not allowed",
+                    "Designs must meet specified requirements"
+                ]
+            },
+            timeline: [
+                { id: 1, label: "Registration Opens", date: "2025-01-01", status: "completed" },
+                { id: 2, label: "Registration Closes", date: "2025-01-14", status: "upcoming" },
+                { id: 3, label: "Contest Start", date: "2025-01-15", status: "upcoming" },
+                { id: 4, label: "Contest End", date: "2025-01-15", status: "upcoming" },
+                { id: 5, label: "Results", date: "2025-01-16", status: "upcoming" }
+            ],
+            requirements: [
+                { id: 1, text: "AutoCAD 2024 installed", icon: "fa-desktop", details: "Latest version required" },
+                { id: 2, text: "Stable internet connection", icon: "fa-wifi", details: "Minimum 5 Mbps" },
+                { id: 3, text: "Minimum 8GB RAM", icon: "fa-memory", details: "16GB Recommended" },
+                { id: 4, text: "Basic CAD knowledge", icon: "fa-brain", details: "2+ years experience recommended" }
+            ]
+        };
+
+        // Function to format date
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Main render function
+       
+
+        // Set up event listeners for interactive elements
+        function setupEventListeners() {
+            const registerBtn = document.getElementById('registerBtn');
+            const followHostBtn = document.getElementById('followHostBtn');
+            const calendarBtn = document.getElementById('calendarBtn');
+            
+            registerBtn.addEventListener('click', function() {
+                if (this.textContent.includes('Register')) {
+                    this.innerHTML = '<i class="fas fa-check"></i> Registered';
+                    this.style.backgroundColor = '#22c55e';
+                    const participantCount = document.getElementById('participantCount');
+                    const [current, max] = participantCount.textContent.split(' / ');
+                    participantCount.textContent = `${parseInt(current) + 1} / ${max}`;
+                }
+            });
+
+            followHostBtn.addEventListener('click', function() {
+                if (this.textContent.includes('Follow')) {
+                    this.innerHTML = '<i class="fas fa-check"></i> Following';
+                    this.style.backgroundColor = 'white';
+                    this.style.color = '#1e40af';
+                } else {
+                    this.innerHTML = '<i class="fas fa-plus"></i> Follow Host';
+                    this.style.backgroundColor = 'transparent';
+                    this.style.color = 'white';
+                }
+            });
+
+            calendarBtn.addEventListener('click', () => {
+                // Would typically integrate with calendar API
+                alert('Calendar integration coming soon!');
+            });
+        }
+
+       
+       
+    </script>
+</body>
+</html>

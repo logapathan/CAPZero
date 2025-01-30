@@ -9,6 +9,8 @@ import Contest from "./Component/Contest";
 
 import ViewContest from "./Component/ViewContest";
 import SignIn from "./Component/SignIn";
+import Page from "./Component/Page";
+import "./index.css";
 
 const App = () => {
   return (
@@ -26,8 +28,10 @@ const App = () => {
 
         {/* Other routes can go here */}
         <Route path="/profile" element={<Profile />} />
+
         <Route path="/l" element={<RegistrationForm />} />
         <Route path="/n" element={<ViewContest />} />
+        <Route path="/a" element={<Page />} />
       </Routes>
     </Router>
   );
