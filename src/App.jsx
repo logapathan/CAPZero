@@ -11,6 +11,7 @@ import ViewContest from "./Component/ViewContest";
 import SignIn from "./Component/SignIn";
 import Page from "./Component/Page";
 import "./index.css";
+import QuizPage from "./Component/practicepage";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/l" element={<RegistrationForm />} />
         <Route path="/n" element={<ViewContest />} />
         <Route path="/a" element={<Page />} />
+        <Route path="/practice" element={<QuizPage />} />
       </Routes>
     </Router>
   );

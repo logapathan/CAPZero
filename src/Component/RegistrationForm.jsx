@@ -26,7 +26,7 @@ const RegistrationForm = () => {
     softwareExpertise: [],
     topicsOfInterest: [],
   });
-  const [error, setError] = useState({ value: false, message: "" });
+  const [invalid, setInvalid] = useState({ value: false, message: "" });
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -158,24 +158,28 @@ const RegistrationForm = () => {
           formDataToSend.append(key, formData[key]);
         }
       });
-      for (let pair of formDataToSend.entries()) {
-        console.log(pair[0], pair[1]);
-      }
+      // for (let pair of formDataToSend.entries()) {
+      //   console.log(pair[0], pair[1]);
+      // }
 
       const response = await axios.post(
         "http://localhost:3000/register",
         formDataToSend
       );
       const data = response.data;
+      console.log(data);
       try {
         if (!data.pass) {
-          setError({ value: !data.pass, message: data.message });
+          setInvalid({ value: !data.pass, message: data.message });
+
           return;
+        } else {
+          setInvalid({ value: !data.pass, message: data.message });
+          // console.log(invalid);
         }
       } catch (error) {
         console.log(error);
       }
-      console.log(error);
 
       setSubmitStatus({
         message:
@@ -184,16 +188,16 @@ const RegistrationForm = () => {
       });
 
       // Reset form after successful submission
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        linkedinProfile: "",
-        profilePhoto: null,
-        softwareExpertise: [],
-        topicsOfInterest: [],
-      });
+      // setFormData({
+      //   name: "",
+      //   email: "",
+      //   password: "",
+      //   confirmPassword: "",
+      //   linkedinProfile: "",
+      //   profilePhoto: null,
+      //   softwareExpertise: [],
+      //   topicsOfInterest: [],
+      // });
     } catch (error) {
       setSubmitStatus({
         message:
@@ -220,7 +224,7 @@ const RegistrationForm = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Basic Information */}
               <div className="space-y-2">
-                {error.value && (
+                {invalid.value && (
                   <div
                     style={{
                       color: "red",
@@ -231,7 +235,7 @@ const RegistrationForm = () => {
                       border: "1px solid red",
                     }}
                   >
-                    {error.message}
+                    {invalid.message}
                   </div>
                 )}
                 <Input
