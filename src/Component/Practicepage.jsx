@@ -31,7 +31,8 @@ const QuizPage = () => {
       // Simulated API call
       const question = {
         id: 1,
-        imageUrl: "/api/placeholder/800/600",
+        imageUrl:
+          "C:/logapathan/projects/capZero/Server-side/demon_slayer_keycjhain.png",
         answer: "example answer",
         timeLimit: 300, // 5 minutes
       };

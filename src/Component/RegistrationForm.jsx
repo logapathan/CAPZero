@@ -167,7 +167,7 @@ const RegistrationForm = () => {
         formDataToSend
       );
       const data = response.data;
-      console.log(data);
+
       try {
         if (!data.pass) {
           setInvalid({ value: !data.pass, message: data.message });
@@ -188,16 +188,16 @@ const RegistrationForm = () => {
       });
 
       // Reset form after successful submission
-      // setFormData({
-      //   name: "",
-      //   email: "",
-      //   password: "",
-      //   confirmPassword: "",
-      //   linkedinProfile: "",
-      //   profilePhoto: null,
-      //   softwareExpertise: [],
-      //   topicsOfInterest: [],
-      // });
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        linkedinProfile: "",
+        profilePhoto: null,
+        softwareExpertise: [],
+        topicsOfInterest: [],
+      });
     } catch (error) {
       setSubmitStatus({
         message:
