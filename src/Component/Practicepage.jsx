@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ZoomIn, ZoomOut, RotateCcw, Timer } from "lucide-react";
 
 const QuizPage = () => {
@@ -32,7 +32,7 @@ const QuizPage = () => {
       const question = {
         id: 1,
         imageUrl:
-          "C:/logapathan/projects/capZero/Server-side/demon_slayer_keycjhain.png",
+          "https://capzen.s3.ap-south-1.amazonaws.com/ProfilePhoto/demon_slayer_keycjhain.png",
         answer: "example answer",
         timeLimit: 300, // 5 minutes
       };

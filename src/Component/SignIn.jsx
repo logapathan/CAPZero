@@ -15,7 +15,7 @@ const SignIn = () => {
     const data = await response.data;
 
     if (data.pass) {
-      navigate("/");
+      navigate("/contestpage");
     } else {
       setError({ value: true, message: data.message });
     }

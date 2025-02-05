@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { Globe, Linkedin, Github } from "lucide-react";
+import { Globe } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { motion } from "framer-motion"
-
+import { motion } from "framer-motion";
 
 import Header from "./pages/Header";
 import Overview from "./pages/Overview";
@@ -24,10 +23,20 @@ const ProfileHeader = () => (
 );
 
 const Navigation = ({ currentPage, setCurrentPage }) => {
-  const navItems = ["overview", "contests", "practice", "projects", "achievements"];
-  
+  const navItems = [
+    "overview",
+    "contests",
+    "practice",
+    "projects",
+    "achievements",
+  ];
+
   return (
-    <Tabs value={currentPage} onValueChange={setCurrentPage} className="w-full bg-white rounded-lg shadow-md">
+    <Tabs
+      value={currentPage}
+      onValueChange={setCurrentPage}
+      className="w-full bg-white rounded-lg shadow-md"
+    >
       <TabsList className="grid grid-cols-5 gap-2">
         {navItems.map((item) => (
           <TabsTrigger key={item} value={item} className="capitalize">
@@ -51,33 +60,32 @@ const SkillBar = ({ skill, percentage }) => (
 
 const EducationCard = () => (
   <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
-  <Card className="mb-6">
-    <CardHeader>
-      <CardTitle className="text-blue-600">Education</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <div className="space-y-4">
-        <div>
-          <h3 className="font-semibold text-gray-900">MIT</h3>
-          <p className="text-gray-600">Mechanical Engineering</p>
-          <p className="text-gray-500 text-sm">3rd Year</p>
+    <Card className="mb-6">
+      <CardHeader>
+        <CardTitle className="text-blue-600">Education</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-semibold text-gray-900">MIT</h3>
+            <p className="text-gray-600">Mechanical Engineering</p>
+            <p className="text-gray-500 text-sm">3rd Year</p>
+          </div>
         </div>
-      </div>
-    </CardContent>
-  </Card>
-  <Card>
-  <CardHeader>
-    <CardTitle className="text-blue-600">Current Position</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <div>
-      <h3 className="font-semibold text-gray-900">CAD Design Intern</h3>
-      <p className="text-gray-600">TechCorp Industries</p>
-    </div>
-  </CardContent>
-</Card>
-</div>
-  
+      </CardContent>
+    </Card>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-blue-600">Current Position</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div>
+          <h3 className="font-semibold text-gray-900">CAD Design Intern</h3>
+          <p className="text-gray-600">TechCorp Industries</p>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
 );
 
 const CurrentPositionCard = () => (
@@ -136,20 +144,22 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 mt-10">
-      
       <div className="max-w-7xl mx-auto pb-12">
         <Card>
           <ProfileHeader />
-          
+
           <div className="pt-16 px-8">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">Alex Johnson</h1>
+                <h1 className="text-2xl font-bold text-gray-900">
+                  Alex Johnson
+                </h1>
                 <p className="text-gray-600 mt-1">
-                  Mechanical Engineering student passionate about CAD design and automation
+                  Mechanical Engineering student passionate about CAD design and
+                  automation
                 </p>
               </div>
-              
+
               <div className="flex space-x-4">
                 <Button variant="ghost" size="icon">
                   <Globe className="h-5 w-5" />
@@ -164,27 +174,24 @@ export default function App() {
             </div>
 
             <div className="mt-8">
-              <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+              <Navigation
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
           </div>
         </Card>
 
         <div className="mt-6">
-        <div className="mt-8 flex justify-between">
-  {/* Left side: Education and Current Position stacked vertically */}
-  <div className="w-2/5 space-y-6">
-    <EducationCard />
-    
-  </div>
+          <div className="mt-8 flex justify-between">
+            {/* Left side: Education and Current Position stacked vertically */}
+            <div className="w-2/5 space-y-6">
+              <EducationCard />
+            </div>
 
-  {/* Right side: Navigation taking full available space */}
-  <div className="w-full ml-8"> 
-  {renderPage()}
-  </div>
-</div>
-
-          
-
+            {/* Right side: Navigation taking full available space */}
+            <div className="w-full ml-8">{renderPage()}</div>
+          </div>
         </div>
       </div>
     </div>
