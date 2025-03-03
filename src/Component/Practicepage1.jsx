@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { ZoomIn, ZoomOut, RotateCcw, Timer } from "lucide-react";
 import axios from "axios";
 
-const PracticePage = () => {
+const PracticePage1 = () => {
   // State management
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [answer, setAnswer] = useState("");
@@ -10,59 +10,98 @@ const PracticePage = () => {
   const [stlFile, setStlFile] = useState(null);
   const [stlAnalysis, setStlAnalysis] = useState(null);
   const [timer, setTimer] = useState(0);
-  const [isActive, setIsActive] = useState(true); // Set to true by default
+  const [isActive, setIsActive] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentQuestionId, setCurrentQuestionId] = useState(1);
   const [feedback, setFeedback] = useState(null);
 
-  // Refs
-  const intervalRef = useRef(null);
+  // WebSocket reference
+  const wsRef = useRef(null);
+
+  // File input reference
   const fileInputRef = useRef(null);
 
-  // Start timer automatically when component mounts
+  // Initialize WebSocket connection
   useEffect(() => {
-    // Start the timer immediately
-    startLocalTimer();
+    // Connect to WebSocket server
+    const ws = new WebSocket("ws://localhost:8080");
 
-    // Fetch the first question
+    ws.onopen = () => {
+      console.log("WebSocket connection established");
+    };
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      // Handle different message types
+      switch (data.type) {
+        case "TIMER_UPDATE":
+          if (data.questionId === currentQuestion?.questionid) {
+            setTimer(data.time);
+          }
+          break;
+        default:
+          console.log("Unknown message type:", data.type);
+      }
+    };
+
+    ws.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    // Store WebSocket reference
+    wsRef.current = ws;
+
+    // Clean up WebSocket connection on component unmount
+    return () => {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+      }
+    };
+  }, [currentQuestion?.questionid]);
+
+  // Fetch question when component mounts or question ID changes
+  useEffect(() => {
     fetchQuestion(currentQuestionId);
 
-    // Clean up timer on unmount
+    // Cleanup function
     return () => {
-      stopLocalTimer();
+      stopTimer();
     };
-  }, []);
-
-  // Reset timer when moving to a new question
-  useEffect(() => {
-    // Reset and restart timer when question changes
-    if (currentQuestionId > 1) {
-      setTimer(0);
-      startLocalTimer();
-    }
   }, [currentQuestionId]);
 
-  // Local timer functions that don't rely on WebSocket
-  const startLocalTimer = () => {
-    // Clear any existing interval first
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
+  // Start the timer via WebSocket
+  const startTimer = (questionId) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(
+        JSON.stringify({
+          type: "START_TIMER",
+          questionId,
+        })
+      );
+      setIsActive(true);
     }
-
-    // Set up new interval that increments timer every second
-    intervalRef.current = setInterval(() => {
-      setTimer((prevTimer) => prevTimer + 1);
-    }, 1000);
-
-    setIsActive(true);
   };
 
-  const stopLocalTimer = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+  // Stop the timer via WebSocket
+  const stopTimer = () => {
+    if (
+      wsRef.current &&
+      wsRef.current.readyState === WebSocket.OPEN &&
+      currentQuestion?.questionid
+    ) {
+      wsRef.current.send(
+        JSON.stringify({
+          type: "STOP_TIMER",
+          questionId: currentQuestion.questionid,
+        })
+      );
+      setIsActive(false);
     }
-    setIsActive(false);
   };
 
   // Fetch question from API
@@ -76,14 +115,19 @@ const PracticePage = () => {
       setStlAnalysis(null);
       setFeedback(null);
       setScale(1);
-
-      // Note: We don't reset timer here since we want it to start from the time user enters the page
+      setTimer(0);
 
       const response = await axios.get(
         `${"http://localhost:3000"}/fetchquestion/${questionId}`
       );
 
       setCurrentQuestion(response.data);
+
+      // Start the timer for this question
+      if (response.data.questionid) {
+        startTimer(response.data.questionid);
+      }
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching question:", error);
@@ -211,7 +255,7 @@ const PracticePage = () => {
     if (!currentQuestion) return;
 
     // Stop the timer
-    stopLocalTimer();
+    stopTimer();
 
     const isCorrect =
       answer.toLowerCase() === currentQuestion.answer.toLowerCase();
@@ -441,4 +485,4 @@ const PracticePage = () => {
   );
 };
 
-export default PracticePage;
+export default PracticePage1;

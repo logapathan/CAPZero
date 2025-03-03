@@ -12,6 +12,9 @@ import SignIn from "./Component/SignIn";
 import Page from "./Component/Page";
 import "./index.css";
 import QuizPage from "./Component/practicepage";
+import PracticeModulesList from "./Component/Practicelistpage";
+import PracticePage from "./Component/practicepage";
+import PracticePage1 from "./Component/Practicepage1";
 
 const App = () => {
   return (
@@ -20,6 +23,7 @@ const App = () => {
         {/* Home Page Route */}
         <Route path="/" element={<SignIn />} />
         <Route path="/Contestpage" element={<ContestPage />} />
+        <Route path="/practicelist" element={<PracticeModulesList />} />
 
         <Route path="/view" element={<Contest />} />
 
@@ -33,7 +37,7 @@ const App = () => {
         <Route path="/l" element={<RegistrationForm />} />
         <Route path="/n" element={<ViewContest />} />
         <Route path="/a" element={<Page />} />
-        <Route path="/practice" element={<QuizPage />} />
+        <Route path="/practice" element={<PracticePage1 />} />
       </Routes>
     </Router>
   );
